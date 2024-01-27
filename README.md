@@ -1,4 +1,5 @@
 # Graph-Skeleton
+<<<<<<< HEAD
 
 This repository is for "Graph-Skeleton: Less than 2% Nodes are Sufficient to Represent
 Billion-Scale Graph [[arXiv]](https://openreview.net/forum?id=dU73Mgx7xm&referrer=%5Bthe%20profile%20of%20Haoran%20Deng%5D(%2Fprofile%3Fid%3D~Haoran_Deng2))" accepted by **WWW2024**.
@@ -89,3 +90,5 @@ If you find this code useful, please cite our paper:
 ## Related link
  * This project is developed based on [CompressAI library](https://github.com/InterDigitalInc/CompressAI)
  -->
+=======
+>>>>>>> 1072652944cc6a61658e0a2b9e4cce07bb858d2e
