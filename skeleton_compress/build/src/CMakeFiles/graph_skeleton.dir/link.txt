@@ -1,0 +1,1 @@
+/usr/bin/c++ -fPIC  -std=c++11 -O3 -Wall  -shared -Wl,-soname,graph_skeleton.so -o ../../graph_skeleton.so CMakeFiles/graph_skeleton.dir/init.cc.o CMakeFiles/graph_skeleton.dir/skeleton.cc.o CMakeFiles/graph_skeleton.dir/stat.cc.o -Wl,-rpath,/home/caolinfeng/anaconda3/lib -lboost_numpy3 /home/caolinfeng/anaconda3/lib/libpython3.9.so 

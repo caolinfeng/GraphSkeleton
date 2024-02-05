@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/caolinfeng/clf/xinye/GraphSkeleton/skeleton_compress/src/graph.h
+bits/stdc++.h
+-
+boost/random.hpp
+-
+boost/python.hpp
+-
+boost/python/numpy.hpp
+-
+
+/home/caolinfeng/clf/xinye/GraphSkeleton/skeleton_compress/src/init.cc
+graph.h
+/home/caolinfeng/clf/xinye/GraphSkeleton/skeleton_compress/src/graph.h
+
+/home/caolinfeng/clf/xinye/GraphSkeleton/skeleton_compress/src/skeleton.cc
+graph.h
+/home/caolinfeng/clf/xinye/GraphSkeleton/skeleton_compress/src/graph.h
+
+/home/caolinfeng/clf/xinye/GraphSkeleton/skeleton_compress/src/stat.cc
+graph.h
+/home/caolinfeng/clf/xinye/GraphSkeleton/skeleton_compress/src/graph.h
+

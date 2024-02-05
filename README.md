@@ -16,18 +16,6 @@ Install libboost
 sudo apt-get install libboost-all-dev
 ```
 
-### Compile
-
-Compile Graph-Skeleton
-
-```shell
-mkdir build
-cd build
-cmake ..
-make
-cd ..
-```
-
 ### Data Download
 
 The currently code demo is based on the dataset [DGraph](https://dgraph.xinye.com/dataset). Please unizp the dataset folder and organize as follows:
@@ -37,9 +25,26 @@ The currently code demo is based on the dataset [DGraph](https://dgraph.xinye.co
    └─dgraphfin.npz
 ```
 
-### GraphS-Skeleton Generation
-To generate skeleton graphs, a graph compressio script is provided. Please note that in our original paper, hyper-parameters "d1", "d2" are set as 2 and 1, you can also modify the setting of "d" in the script to change the node fetching distance. This script will generate three different sekeleton graphs (i.e., $\alpha$, $\beta$ and $\gamma$).
+### Graph-Skeleton Compression
 
+* Compile Graph-Skeleton
+
+```shell
+cd skeleton_compress
+mkdir build
+cd build
+cmake ..
+make
+cd ..
+```
+
+* GraphS-Skeleton Generation
+You can run the script `./skeleton_compress/skeleton_compression.py` to generate skeleton graphs. Please note that in our original paper, hyper-parameters "d" is set as [2,1], you can also modify the setting of "d" to change the node fetching distance. 
+By setting different values of hyper-parameters "cut", different strategies (i.e., $\alpha$, $\beta$ and $\gamma$) will be utilized for graph condensation.
+
+```shell
+python skeleton_compression.py
+```
 
 <!-- 
 ## Dependencies
