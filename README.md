@@ -18,7 +18,8 @@ sudo apt-get install libboost-all-dev
 
 ### Data Download
 
-The currently code demo is based on the dataset [DGraph](https://dgraph.xinye.com/dataset). Please unizp the dataset folder and organize as follows:
+The currently code demo is based on the dataset [DGraph-Fin
+](https://dgraph.xinye.com/dataset). Please download the `DGraphFin.zip` and move it under directory `datasets`, unizp the dataset folder and organize as follows:
 ```
 ./datasets
 --DGraphFin
