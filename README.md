@@ -39,6 +39,7 @@ cd ..
 ```
 
 * GraphS-Skeleton Generation
+
 You can run the script `./skeleton_compress/skeleton_compression.py` to generate skeleton graphs. Please note that in our original paper, hyper-parameters "d" is set as [2,1], you can also modify the setting of "d" to change the node fetching distance. 
 By setting different values of hyper-parameters "cut", different strategies (i.e., $\alpha$, $\beta$ and $\gamma$) will be utilized for graph condensation.
 
