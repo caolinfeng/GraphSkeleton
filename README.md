@@ -33,7 +33,7 @@ The currently code demo is based on the dataset [DGraph-Fin
 ### Preliminary Studies
 
 You can run the scripts in fold `./preliminary_exploration` to implement the exploration studies (Section 2 [Empirical Analysis]) in our paper.
-The edge cutting type is controled by hyper-parameters `--cut`, which includes random cut (`cut_random`), cut T-T (`tt`), cut T-B (`tb`), cut B-B (`bb`).
+The edge cutting type is controlled by hyper-parameters `--cut`, which includes random cut (`cut_random`), cut T-T (`tt`), cut T-B (`tb`), cut B-B (`bb`).
 
 ```shell
 cd preliminary_exploration
@@ -56,8 +56,8 @@ cd ..
 
 * Graph-Skeleton Generation
 
-You can run the script `./skeleton_compress/skeleton_compression.py` to generate skeleton graphs. Please note that in our original paper, hyper-parameters "--d" is set as [2,1], you can also modify the setting of "d" to change the node fetching distance. 
-By setting different values of hyper-parameters "--cut", different strategies (i.e., $\alpha$, $\beta$ and $\gamma$) will be utilized for graph condensation.
+You can run the script `./skeleton_compress/skeleton_compression.py` to generate skeleton graphs. Please note that in our original paper, hyper-parameters `--d` is set as [2,1], you can also modify the setting of `d` to change the node fetching distance. 
+By setting different values of hyper-parameters `--cut`, different strategies (i.e., $\alpha$, $\beta$ and $\gamma$) will be utilized for graph condensation.
 
 ```shell
 python skeleton_compression.py
