@@ -29,7 +29,6 @@ data, root = dataloader(args.dataset)
 x = data['x']
 y = data['y']
 edge_index = data['edge_index'].T
-print(edge_index.shape)
 
 train_mask = data['train_mask']
 valid_mask = data['valid_mask']
@@ -66,7 +65,6 @@ if args.cut == 'alpha':
     # n_edge_index = g.reconstruct_edge(n_id)
     n_edge_index, n_edge_weight = g.reconstruct_reweighted_edge(n_id)
     print(f"Done! [{time.perf_counter() - start_time:.2f}s]")
-    print(f"Graph_2: #V: {np.max(n_id)+1}, #E: {n_edge_index.shape[1]}")
 
     n_x, cnt_x = reconstruct_x(x, n_id)
     n_y = mapping_label(y, n_id)
@@ -76,7 +74,8 @@ if args.cut == 'alpha':
     n_test_mask = mapping_mask(test_mask, n_id)
     n_star = mapping_mask(star, n_id)
 
-    print('new node number:', n_x.shape[0])
+    print('-'*20)
+    print(f'| Skeleton-alpha | #V: {n_x.shape[0]} | #E: {n_edge_index.shape[1]} | #Target: {n_star.shape[0]} |')
     print('BCR: {:.3f}'.format(1-(x.shape[0]-n_x.shape[0])/(x.shape[0]-star.shape[0])))
 
     skeleton_data = { 'x': n_x, 'y': n_y, 
@@ -88,7 +87,7 @@ if args.cut == 'alpha':
 
 # In[]:
 
-elif args.cut == 'alpha':
+elif args.cut == 'beta':
 
     print('*'*10, 'skeleton-beta', '*'*10)
 
@@ -116,7 +115,6 @@ elif args.cut == 'alpha':
     # n_edge_index = g.reconstruct_edge(n_id)
     n_edge_index, n_edge_weight = g.reconstruct_reweighted_edge(n_id)
     print(f"Done! [{time.perf_counter() - start_time:.2f}s]")
-    print(f"Graph_2: #V: {np.max(n_id)+1}, #E: {n_edge_index.shape[1]}")
 
     n_x, cnt_x = reconstruct_x(x, n_id)
     n_y = mapping_label(y, n_id)
@@ -126,7 +124,8 @@ elif args.cut == 'alpha':
     n_test_mask = mapping_mask(test_mask, n_id)
     n_star = mapping_mask(star, n_id)
 
-    print('new node number:', n_x.shape[0])
+    print('-'*20)
+    print(f'| Skeleton-beta | #V: {n_x.shape[0]} | #E: {n_edge_index.shape[1]} | #Target: {n_star.shape[0]} |')
     print('BCR: {:.3f}'.format(1-(x.shape[0]-n_x.shape[0])/(x.shape[0]-star.shape[0])))
 
     skeleton_data = { 'x': n_x, 'y': n_y, 
@@ -143,25 +142,43 @@ elif args.cut == 'gamma':
 
     # allfliation merge
     print('*'*10, 'skeleton-gamma', '*'*10)
+    print('first use beta strategy')
+    start_time = time.perf_counter()
+    graph_skeleton.init()
+    edge_index32 = edge_index.astype(np.int32)
+    star32 = star.astype(np.int32)
+    num_node = np.max(edge_index) + 1
+    tmp = np.full((num_node,), False, dtype=np.bool_)
+    tmp[star] = True
+    star32 = tmp
+    g = graph_skeleton.Graph(edge_index32, star32)
+
+    start_time = time.perf_counter()
+    n_id = g.extract_skeleton(args.d[1], args.d[0], 15, True, 16)
+
+    start_time = time.perf_counter()
+    n_edge_index, n_edge_weight = g.reconstruct_reweighted_edge(n_id)
+    n_x, cnt_x = reconstruct_x(x, n_id)
+    n_y = mapping_label(y, n_id)
+
+    n_train_mask = mapping_mask(train_mask, n_id)
+    n_valid_mask = mapping_mask(valid_mask, n_id)
+    n_test_mask = mapping_mask(test_mask, n_id)
+    n_star = mapping_mask(star, n_id)
 
     num_node2 = np.max(n_edge_index) + 1
     n_star32 = np.full((num_node2,), False, dtype=np.bool_)
     n_star32[n_star] = True
 
-
     graph_skeleton.init()
     g2 = graph_skeleton.Graph(n_edge_index, n_star32)
-
     corr_mask = g2.get_corr_mask(1, 2)
-    # print(corr_mask)
-
     nt = g2.nearest_target()
-    # print(nt)
 
     g2.drop_corr()
     n_id2 = g2.extract_skeleton(1, 2, 2, True, 1)
 
-    alpha = 0.7 # corr节点feature的占比
+    merge_ratio = 0.7 # corr节点feature的占比
     x_corr = np.zeros_like(n_x)
     num_corr = np.zeros(x_corr.shape[0])
     x2 = np.zeros_like(n_x)
@@ -178,13 +195,12 @@ elif args.cut == 'gamma':
 
     for i in range(num_node2):
         if n_star32[i]:
-            x2[i] = (alpha * n_x[i] + (1-alpha) * x_corr[i]/num_corr[i])
+            x2[i] = (merge_ratio * n_x[i] + (1-merge_ratio) * x_corr[i]/num_corr[i])
 
     n_x2, cnt_x2 = reconstruct_x(x2, n_id2)
 
     n_edge_index2, n_edge_weight2 = g2.reconstruct_reweighted_edge(n_id2)
     print(f"Done! [{time.perf_counter() - start_time:.2f}s]")
-    print(f"Graph_2: #V: {np.max(n_id2)+1}, #E: {n_edge_index2.shape[1]}")
 
     n_y2 = mapping_label(n_y, n_id2)
     n_train_mask2 = mapping_mask(n_train_mask, n_id2)
@@ -192,7 +208,8 @@ elif args.cut == 'gamma':
     n_test_mask2 = mapping_mask(n_test_mask, n_id2)
     n_star2 = mapping_mask(n_star, n_id2)
 
-    print('new node number:', n_x2.shape[0])
+    print('-'*20)
+    print(f'| Skeleton-gamma | #V: {n_x2.shape[0]} | #E: {n_edge_index2.shape[1]} | #Target: {n_star2.shape[0]} |')
     print('BCR: {:.3f}'.format(1-(x.shape[0]-n_x2.shape[0])/(x.shape[0]-star.shape[0])))
 
     skeleton_data = { 'x': n_x2, 'y': n_y2, 

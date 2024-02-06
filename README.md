@@ -5,6 +5,9 @@ Billion-Scale Graph [[arXiv]](https://openreview.net/forum?id=dU73Mgx7xm&referre
 
 ## Overview
 
+In this paper, we focus on a common challenge in graph mining applications: compressing the massive **background nodes** for a small part of **target nodes** classification, to tackle the storage and model deployment difficulties on very large graphs. 
+The proposed Graph-Skeleton first fetches the essential background nodes under the guidance of _**structural connectivity**_ and _**feature correlation**_, then condenses the information of background nodes with three different condensation strategies. The generated skeleton graph is highly informative and friendly for storage and graph model deployment.
+
 ![fig1](./figs/model.png)
 
 
@@ -27,6 +30,17 @@ The currently code demo is based on the dataset [DGraph-Fin
      └─dgraphfin.npz
 ```
 
+### Preliminary Studies
+
+You can run the scripts in fold `./preliminary_exploration` to implement the exploration studies (Section 2 [Empirical Analysis]) in our paper.
+The edge cutting type is controled by hyper-parameters `--cut`, which includes random cut (`cut_random`), cut T-T (`tt`), cut T-B (`tb`), cut B-B (`bb`).
+
+```shell
+cd preliminary_exploration
+python dgraph/gnn_mini_batch.py --cut tt
+python dgraph/gnn_mini_batch.py --cut cut_random --rd_ratio 0.5
+```
+
 ### Graph-Skeleton Compression
 
 * Compile Graph-Skeleton
@@ -42,11 +56,20 @@ cd ..
 
 * Graph-Skeleton Generation
 
-You can run the script `./skeleton_compress/skeleton_compression.py` to generate skeleton graphs. Please note that in our original paper, hyper-parameters "d" is set as [2,1], you can also modify the setting of "d" to change the node fetching distance. 
-By setting different values of hyper-parameters "cut", different strategies (i.e., $\alpha$, $\beta$ and $\gamma$) will be utilized for graph condensation.
+You can run the script `./skeleton_compress/skeleton_compression.py` to generate skeleton graphs. Please note that in our original paper, hyper-parameters "--d" is set as [2,1], you can also modify the setting of "d" to change the node fetching distance. 
+By setting different values of hyper-parameters "--cut", different strategies (i.e., $\alpha$, $\beta$ and $\gamma$) will be utilized for graph condensation.
 
 ```shell
 python skeleton_compression.py
+```
+
+### Graph-Skeleton Downstream Target Classification
+
+You can run the scripts in fold `./skeleton_test` to deploy the generated skeleton graphs on downstream GNNs for target nodes classification task.
+
+```shell
+cd skeleton_test/dgraph
+python gnn_mini_batch.py --cut skeleton_gamma
 ```
 
 <!-- 

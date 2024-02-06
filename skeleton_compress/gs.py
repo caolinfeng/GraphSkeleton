@@ -50,7 +50,7 @@ def zip_nodes(edge_index, target_node, d1=1, d2=1, dk=1):
     :return: A bool np.array. If the mask[i] is true, it means that the i-th node
              is selected, and the important nodes are selected by default.
     '''
-    print(f"Zip nodes (num_edge: {edge_index.shape[1]})... ", end=" ", flush=True)
+    print(f"compress nodes (num_edge: {edge_index.shape[1]})... ", end=" ", flush=True)
     start_time = time.perf_counter()
     n = int(np.max(edge_index) + 1)        # Num of vertex
     edge_index = edge_index.astype(np.int32)

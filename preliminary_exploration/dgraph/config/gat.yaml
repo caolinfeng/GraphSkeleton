@@ -1,0 +1,14 @@
+Name: dgraph_gcn
+hidden_channels: 128
+num_layers: 3
+epochs: 100
+lr: 0.01
+dropout: 0.0
+weight_decay: 5e-7
+log_steps: 5
+batchnorm: False
+batch_size: 16384
+sample_size: 
+  - 10
+  - 10
+  - 10
