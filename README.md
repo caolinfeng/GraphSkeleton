@@ -1,6 +1,6 @@
 # Graph-Skeleton
 
-This repository is for "Graph-Skeleton: Less than 2% Nodes are Sufficient to Represent
+This repository is for "Graph-Skeleton: ～1% Nodes are Sufficient to Represent
 Billion-Scale Graph accepted by **WWW2024**.
 
 ## Overview
