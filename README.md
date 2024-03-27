@@ -16,7 +16,7 @@ The proposed Graph-Skeleton first fetches the essential background nodes under t
 Install libboost
 
 ```shell
-sudo apt-get install libboost-all-dev
+conda install py-boost
 ```
 
 ### Data Download
