@@ -13,10 +13,11 @@ The proposed Graph-Skeleton first fetches the essential background nodes under t
 
 ### Install
 
-Install libboost
 
 ```shell
 conda install py-boost
+pip install boxprint
+pip install colors.py
 ```
 
 ### Data Download
